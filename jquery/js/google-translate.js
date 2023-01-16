@@ -10,30 +10,30 @@ const googleTranslateConfig = {
 
 function TranslateInit() {
     let code = TranslateGetCode();
-    // РќР°С…РѕРґРёРј С„Р»Р°Рі СЃ РІС‹Р±СЂР°РЅРЅС‹Рј СЏР·С‹РєРѕРј РґР»СЏ РїРµСЂРµРІРѕРґР° Рё РґРѕР±Р°РІР»СЏРµРј Рє РЅРµРјСѓ Р°РєС‚РёРІРЅС‹Р№ РєР»Р°СЃСЃ
+    // Находим флаг с выбранным языком для перевода и добавляем к нему активный класс
     $('[data-google-lang="' + code + '"]').addClass('language__img_active');
 
     if (code == googleTranslateConfig.lang) {
-        // Р•СЃР»Рё СЏР·С‹Рє РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ, СЃРѕРІРїР°РґР°РµС‚ СЃ СЏР·С‹РєРѕРј РЅР° РєРѕС‚РѕСЂС‹Р№ РїРµСЂРµРІРѕРґРёРј
-        // РўРѕ РѕС‡РёС‰Р°РµРј РєСѓРєРё
+        // Если язык по умолчанию, совпадает с языком на который переводим
+        // То очищаем куки
         TranslateClearCookie();
     }
 
-    // РРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РІРёРґР¶РµС‚ СЃ СЏР·С‹РєРѕРј РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+    // Инициализируем виджет с языком по умолчанию
     new google.translate.TranslateElement({
         pageLanguage: googleTranslateConfig.lang,
     });
 
-    // Р’РµС€Р°РµРј СЃРѕР±С‹С‚РёРµ  РєР»РёРє РЅР° С„Р»Р°РіРё
+    // Вешаем событие  клик на флаги
     $('[data-google-lang]').click(function () {
         TranslateSetCookie($(this).attr("data-google-lang"))
-        // РџРµСЂРµР·Р°РіСЂСѓР¶Р°РµРј СЃС‚СЂР°РЅРёС†Сѓ
+        // Перезагружаем страницу
         window.location.reload();
     });
 }
 
 function TranslateGetCode() {
-    // Р•СЃР»Рё РєСѓРєРё РЅРµС‚, С‚Рѕ РїРµСЂРµРґР°РµРј РґРµС„РѕР»С‚РЅС‹Р№ СЏР·С‹Рє
+    // Если куки нет, то передаем дефолтный язык
     let lang = ($.cookie('googtrans') != undefined && $.cookie('googtrans') != "null") ? $.cookie('googtrans') : googleTranslateConfig.lang;
     return lang.substr(-2);
 }
@@ -46,7 +46,7 @@ function TranslateClearCookie() {
 }
 
 function TranslateSetCookie(code) {
-    // Р—Р°РїРёСЃС‹РІР°РµРј РєСѓРєРё /СЏР·С‹Рє_РєРѕС‚РѕСЂС‹Р№_РїРµСЂРµРІРѕРґРёРј/СЏР·С‹Рє_РЅР°_РєРѕС‚РѕСЂС‹Р№_РїРµСЂРµРІРѕРґРёРј
+    // Записываем куки /язык_который_переводим/язык_на_который_переводим
     $.cookie('googtrans', "/auto/" + code);
     $.cookie("googtrans", "/auto/" + code, {
         domain: "." + document.domain,
