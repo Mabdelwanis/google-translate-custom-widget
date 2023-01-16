@@ -1,23 +1,23 @@
-/* Widget assigns height: 100% , which can lead to unpredictable results if you didn't plan for it */
+/* Виджет назначает height: 100% , что может привести к непредксказуемому результату, если вы этого не планровали */
 
 html {
     height: auto !important;
 }
 
-/* We fix the position of the body, which changes the Google bar */
+/* Фиксируем позицию body, которую меняет панель гугла */
 
 body {
     top: 0 !important;
     position: static !important;
 }
 
-/* Hiding the google bar */
+/* Прячем панель гугла */
 
 .skiptranslate {
     display: none !important;
 }
 
-/* Removing link highlighting */
+/* Убираем подсветку ссылок */
 
 .goog-text-highlight {
     background-color: inherit;
